@@ -15,7 +15,7 @@ namespace Exercise1
             Rectangle rectangle = new Rectangle(leftBottomPoint, size); 
             
             // Solution
-            bool result = HitRectangleWithEdgeFunction(rectangle, s);
+            bool result = HitRectangleFunction(rectangle, s);
             // Result
             return  expectingResults == result;
         }
@@ -29,38 +29,28 @@ namespace Exercise1
             Point point = new Point(6.3, 4);
             
             // Solution
-            bool hit = HitRectangleWithEdgeFunction(outerRectangle, point);
-            bool hitHollow = HitRectangleWithoutEdgeFunction(innerRectangle, point);
-            bool hitDash = hit && !hitHollow;
+            bool hitOuter = HitRectangleFunction(outerRectangle, point, true);
+            bool hitInner = HitRectangleFunction(innerRectangle, point, false);
+            bool hitDash = hitOuter && !hitInner;
             // Result
             return hitDash;
         }
 
-        public static bool HitRectangleWithEdgeFunction(Rectangle rectangle, Point shoot)
+        public static bool HitRectangleFunction(Rectangle rectangle, Point shoot, bool edgeIncluding = true)
         {
-            bool betweenXRange = betweenIncluding(rectangle.LeftBottomPoint.X, shoot.X, rectangle.RightTopPoint.X);
-            bool betweenYRange = betweenIncluding(rectangle.LeftBottomPoint.Y, shoot.Y, rectangle.RightTopPoint.Y);
+            
+            bool betweenXRange = between(rectangle.LeftBottomPoint.X, shoot.X, rectangle.RightTopPoint.X, edgeIncluding);
+            bool betweenYRange = between(rectangle.LeftBottomPoint.Y, shoot.Y, rectangle.RightTopPoint.Y, edgeIncluding);
             bool hit = betweenXRange && betweenYRange;
             return hit;
         }
 
-        private static bool betweenIncluding(double min, double value, double max)
+        private static bool between(double min, double value, double max, bool including)
         {
-            return min <= value && value <= max;
-        }
-
-        private static bool betweenExcluding(double min, double value, double max)
-        {
-            return min < value && value < max;
-        }
-
-        // Попадание внутрь полости прямоугольника, не включая границы
-        public static bool HitRectangleWithoutEdgeFunction(Rectangle rectangle, Point shoot)
-        {
-            bool betweenXRange = betweenExcluding(rectangle.LeftBottomPoint.X, shoot.X, rectangle.RightTopPoint.X);
-            bool betweenYRange = betweenExcluding(rectangle.LeftBottomPoint.Y, shoot.Y, rectangle.RightTopPoint.Y);
-            bool hit = betweenXRange && betweenYRange;
-            return hit;
+            if(including)
+                return min <= value && value <= max;
+            else
+                return min < value && value < max;
         }
     }
 }
