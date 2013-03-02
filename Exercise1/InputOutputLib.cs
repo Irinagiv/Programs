@@ -9,14 +9,13 @@ namespace Exercise1
     {
         public static void Test()
         {
-            const int terminalWidth = 80;
-            const int terminalHeight = 25;
-            int halfWidth = terminalWidth / 2;
-            int halfHeight = terminalHeight / 2;
-            AddNewLines(halfHeight);
-            AddEmptyLine(halfWidth);
-            Console.Write('\u25A0');
-            
+            int k = ReadInt();
+            Console.Write(WriteInt(k));
+            while (k != -35)
+            {
+                k = ReadInt();
+                Console.Write(WriteInt(k));
+            }
         }
 
         static void HelloWorldCentred()
@@ -58,14 +57,24 @@ namespace Exercise1
         public static int ReadInt()
         {
             int c = Console.Read();
-
             return c - '0';
+        }
+
+        static int WriteInt(int accumulatedNumber)
+        {
+            int nextDigit = ReadInt();
+            if (nextDigit == -16 || nextDigit == -35)
+            {
+                Console.Write(' ');
+                return accumulatedNumber;
+            }
+            int result = WriteInt(accumulatedNumber * 10 + nextDigit);
+            return result;  
         }
 
         static bool IsDigit(char ch)
         {
-            return HitSubPrograms.Between('0', ch, '9');
-             
+            return HitSubPrograms.Between('0', ch, '9'); 
         }
     }
 }

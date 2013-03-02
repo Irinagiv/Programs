@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace Exercise1
 {
     class Program
@@ -6,6 +7,7 @@ namespace Exercise1
         static void Main()
         {
             
+
             double s1 = AreaSubPrograms.RectangleAreaProcedure();
             double s2 = AreaSubPrograms.HollowRectangleAreaProcedure();
 

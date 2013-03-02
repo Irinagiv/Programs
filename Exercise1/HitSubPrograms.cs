@@ -15,7 +15,7 @@ namespace Exercise1
             Rectangle rectangle = new Rectangle(leftBottomPoint, size); 
             
             // Solution
-            bool result = HitRectangleFunction(rectangle, s);
+            bool result = HitRectangleFunction(rectangle, s);   // по умолчанию edgeIncluding = true
             // Result
             return  expectingResults == result;
         }
