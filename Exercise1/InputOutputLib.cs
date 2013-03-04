@@ -9,13 +9,7 @@ namespace Exercise1
     {
         public static void Test()
         {
-            int k = ReadInt();
-            Console.Write(WriteInt(k));
-            while (k != -35)
-            {
-                k = ReadInt();
-                Console.Write(WriteInt(k));
-            }
+            ReadInt("a85\n", 0);
         }
 
         static void HelloWorldCentred()
@@ -54,27 +48,28 @@ namespace Exercise1
             }
         }
 
-        public static int ReadInt()
+        public static int ReadInt(string characters, int output = 0)
         {
-            int c = Console.Read();
-            return c - '0';
-        }
-
-        static int WriteInt(int accumulatedNumber)
-        {
-            int nextDigit = ReadInt();
-            if (nextDigit == -16 || nextDigit == -35)
+            while (characters[0] != '\n')
             {
-                Console.Write(' ');
-                return accumulatedNumber;
+                int integer = (int)characters[0];
+                if (IsDigit(characters[0]) == false)
+                {
+                    int result = ReadInt(characters.Remove(0, 1), 0);
+                    return result;
+                }
+                    int accumulatedNumber = integer - '0';
+                    int intermediateResult = output * 10 + accumulatedNumber;
+                    ReadInt(characters.Remove(0, 1), intermediateResult);         
+                    return intermediateResult;
             }
-            int result = WriteInt(accumulatedNumber * 10 + nextDigit);
-            return result;  
+            return 0;
         }
 
         static bool IsDigit(char ch)
         {
-            return HitSubPrograms.Between('0', ch, '9'); 
+            bool res = HitSubPrograms.Between('0', ch, '9');
+            return res; 
         }
     }
 }
