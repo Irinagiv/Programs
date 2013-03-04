@@ -9,7 +9,7 @@ namespace Exercise1
     {
         public static void Test()
         {
-            ReadInt("a85\n", 0);
+            ReadInt("a85 sg leug5 2\n", 0);
         }
 
         static void HelloWorldCentred()
@@ -55,14 +55,15 @@ namespace Exercise1
                 int integer = (int)characters[0];
                 if (IsDigit(characters[0]) == false)
                 {
-                    int result = ReadInt(characters.Remove(0, 1), 0);
+                    int result = ReadInt(characters.Remove(0, 1), output);
                     return result;
                 }
                     int accumulatedNumber = integer - '0';
                     int intermediateResult = output * 10 + accumulatedNumber;
-                    ReadInt(characters.Remove(0, 1), intermediateResult);         
+                    ReadInt(characters.Remove(0, 1), intermediateResult);
                     return intermediateResult;
             }
+            Console.Write(output);
             return 0;
         }
 
