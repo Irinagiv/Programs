@@ -9,7 +9,7 @@ namespace Exercise1
     {
         public static void Test()
         {
-            ReadInt("a85 sg leug5 2\n", 0);
+            ReadInt();
         }
 
         static void HelloWorldCentred()
@@ -48,23 +48,18 @@ namespace Exercise1
             }
         }
 
-        public static int ReadInt(string characters, int output = 0)
+        public static int ReadInt()
         {
-            while (characters[0] != '\n')
+            int accumulatedNumber = 0;
+            int ch = Console.Read();
+            while (ch != '\n')
             {
-                int integer = (int)characters[0];
-                if (IsDigit(characters[0]) == false)
-                {
-                    int result = ReadInt(characters.Remove(0, 1), output);
-                    return result;
-                }
-                    int accumulatedNumber = integer - '0';
-                    int intermediateResult = output * 10 + accumulatedNumber;
-                    ReadInt(characters.Remove(0, 1), intermediateResult);
-                    return intermediateResult;
+                if (IsDigit((char)ch))
+                    accumulatedNumber = (accumulatedNumber * 10 + ch) - '0';
+                ch = Console.Read();
             }
-            Console.Write(output);
-            return 0;
+
+            return accumulatedNumber;
         }
 
         static bool IsDigit(char ch)
