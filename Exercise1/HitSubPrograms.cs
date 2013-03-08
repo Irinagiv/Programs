@@ -39,8 +39,8 @@ namespace Exercise1
         public static bool HitRectangleFunction(Rectangle rectangle, Point shoot, bool edgeIncluding = true)
         {
             
-            bool betweenXRange = Between(rectangle.LeftBottomPoint.X, shoot.X, rectangle.RightTopPoint.X, edgeIncluding);
-            bool betweenYRange = Between(rectangle.LeftBottomPoint.Y, shoot.Y, rectangle.RightTopPoint.Y, edgeIncluding);
+            bool betweenXRange = Between(rectangle.LeftTopPoint.X, shoot.X, rectangle.RightBottomPoint.X, edgeIncluding);
+            bool betweenYRange = Between(rectangle.LeftTopPoint.Y, shoot.Y, rectangle.RightBottomPoint.Y, edgeIncluding);
             bool hit = betweenXRange && betweenYRange;
             return hit;
         }

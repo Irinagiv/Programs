@@ -7,21 +7,21 @@ namespace Exercise1
 {
     class Rectangle
     {
-        public Point LeftBottomPoint { get; set; }
+        public Point LeftTopPoint { get; set; }
         public Size Size { get; set; }
 
         public Rectangle(Point leftBottomPoint, Size size)
         {
-            LeftBottomPoint = leftBottomPoint;
+            LeftTopPoint = leftBottomPoint;
             Size = size;
         }
 
-        public Point RightTopPoint
+        public Point RightBottomPoint
         {
             get
             {
-                Point rightTop = new Point(LeftBottomPoint.X + Size.GetWidth(), 
-                                           LeftBottomPoint.Y + Size.GetHeight());
+                Point rightTop = new Point(LeftTopPoint.X + Size.GetWidth(), 
+                                           LeftTopPoint.Y + Size.GetHeight());
                 return rightTop;
             }
         }
