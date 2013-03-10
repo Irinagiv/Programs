@@ -9,10 +9,16 @@ namespace Exercise1
     {
         public static void Test()
         {
-            //HelloWorldCentred();
+            Rectangle[] rectangleArray = { new Rectangle(new Point(2, 4), new Size(1, 1)),
+                                         new Rectangle(new Point(0, 7), new Size(5, 7)),
+                                         new Rectangle(new Point(15, 17), new Size(5.5, 3)),
+                                         new Rectangle(new Point(21, 4), new Size(7.3, 4)),
+                                         new Rectangle(new Point(35, 0), new Size(2, 1)) };
 
-            Rectangle rectangle = new Rectangle(new Point(0, 7), new Size(5, 7));
-            DrawRectangle(rectangle);
+            for (int i = 0; i < rectangleArray.Length; i++)
+            {
+                DrawRectangle(rectangleArray[i]);
+            }
         }
 
         static void HelloWorldCentred()
@@ -55,13 +61,13 @@ namespace Exercise1
         {
             const int terminalWidth = 80;
             const int terminalHeight = 25;
-            for (int i = 0; i < terminalHeight; i++)
+            for (int foregroundChar = 0; foregroundChar < terminalHeight; foregroundChar++)
             {
-                for (int j = 0; j < terminalWidth; j++)
+                for (int backgroundChar = 0; backgroundChar < terminalWidth; backgroundChar++)
                 {
-                    Point pt = new Point(j, i);
+                    Point pt = new Point(backgroundChar, foregroundChar);
                     if (HitSubPrograms.HitRectangleFunction(rectangle, pt, true))
-                        Console.Write('\u25A0');
+                        Console.Write('\u2588');
                     else
                         Console.Write(' ');
                 }
