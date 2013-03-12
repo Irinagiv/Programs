@@ -48,7 +48,7 @@ namespace Exercise1
         public static bool Between(double min, double value, double max, bool including = true)
         {
             if(including)
-                return min <= value && value < max;
+                return min <= value && value <= max;
             else
                 return min < value && value < max;
         }

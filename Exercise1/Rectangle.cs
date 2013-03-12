@@ -20,9 +20,9 @@ namespace Exercise1
         {
             get
             {
-                Point rightTop = new Point(LeftTopPoint.X + Size.GetWidth(), 
-                                           LeftTopPoint.Y + Size.GetHeight());
-                return rightTop;
+                Point rightBottom = new Point(LeftTopPoint.X + Size.GetWidth() - 1, 
+                                              LeftTopPoint.Y + Size.GetHeight() - 1);
+                return rightBottom;
             }
         }
 
