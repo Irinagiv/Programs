@@ -8,7 +8,7 @@ namespace Exercise1
             // Вычисление попадания внутрь прямоугольника
             // Given:
             Point leftBottomPoint = new Point(2, 3);
-            Point s = new Point(5, 3);
+            Point s = new Point(6, 4);
             Size size = new Size(4, 3);
             bool expectingResults = true;
 
@@ -48,7 +48,7 @@ namespace Exercise1
         public static bool Between(double min, double value, double max, bool including = true)
         {
             if(including)
-                return min <= value && value <= max;
+                return min <= value && value < max;
             else
                 return min < value && value < max;
         }

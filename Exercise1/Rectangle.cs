@@ -10,9 +10,9 @@ namespace Exercise1
         public Point LeftTopPoint { get; set; }
         public Size Size { get; set; }
 
-        public Rectangle(Point leftBottomPoint, Size size)
+        public Rectangle(Point leftTopPoint, Size size)
         {
-            LeftTopPoint = leftBottomPoint;
+            LeftTopPoint = leftTopPoint;
             Size = size;
         }
 
