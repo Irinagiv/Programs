@@ -25,8 +25,8 @@ namespace Exercise1
             // Вычисление попадания внутрь полого прямоугольника
             // Given:
             Rectangle outerRectangle = new Rectangle(new Point(2, 3), new Size(8, 4));
-            Rectangle innerRectangle = new Rectangle(new Point(3.5, 4), new Size(5, 2));
-            Point point = new Point(6.3, 4);
+            Rectangle innerRectangle = new Rectangle(new Point(3, 4), new Size(5, 2));
+            Point point = new Point(6, 4);
             
             // Solution
             bool hitOuter = HitRectangleFunction(outerRectangle, point, true);

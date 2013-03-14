@@ -11,15 +11,17 @@ namespace Exercise1
         {
             Rectangle rect1 = new Rectangle(new Point(2, 4), new Size(1, 1));
             Rectangle rect2 = new Rectangle(new Point(0, 7), new Size(5, 7));
-            Rectangle rect3 = new Rectangle(new Point(15, 17), new Size(5.5, 3));
-            Rectangle rect4 = new Rectangle(new Point(21, 4), new Size(7.3, 4));
+            Rectangle rect3 = new Rectangle(new Point(15, 17), new Size(5, 3));
+            Rectangle rect4 = new Rectangle(new Point(21, 4), new Size(7, 4));
             Rectangle rect5 = new Rectangle(new Point(35, 0), new Size(2, 1));
             Rectangle[] rectangleArray = { rect1, rect2, rect3, rect4, rect5 };
 
+            ScreenBuffer screenBuffer = new ScreenBuffer(80, 25);
             for (int i = 0; i < rectangleArray.Length; i++)
             {
-                DrawRectangle(rectangleArray[i]);
+                DrawRectangle(rectangleArray[i], screenBuffer);
             }
+            screenBuffer.Flush();
         }
 
         static void HelloWorldCentred()
@@ -58,7 +60,7 @@ namespace Exercise1
             }
         }
 
-        public static void DrawRectangle(Rectangle rectangle)
+        public static void DrawRectangle(Rectangle rectangle, ScreenBuffer screenBuffer)
         {
             const int terminalWidth = 80;
             const int terminalHeight = 25;
@@ -68,9 +70,7 @@ namespace Exercise1
                 {
                     Point pt = new Point(backgroundChar, foregroundChar);
                     if (HitSubPrograms.HitRectangleFunction(rectangle, pt, true))
-                        Console.Write('\u2588');
-                    else
-                        Console.Write(' ');
+                        screenBuffer.Write(backgroundChar, foregroundChar, '\u2588');
                 }
             }
         }
