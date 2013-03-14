@@ -1,27 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Exercise1
 {
     static class InputOutputLib
     {
+        const int terminalWidth = 80;
+        const int terminalHeight = 25;
+
+        const char white = '\u2588';
+        const char lightGrey = '\u2593';
+        const char grey = '\u2592';
+        const char darkGrey = '\u2591';
+        const char black = ' ';
+
         public static void Test()
         {
-            Rectangle rect1 = new Rectangle(new Point(2, 4), new Size(1, 1));
-            Rectangle rect2 = new Rectangle(new Point(0, 7), new Size(5, 7));
-            Rectangle rect3 = new Rectangle(new Point(15, 17), new Size(5, 3));
-            Rectangle rect4 = new Rectangle(new Point(21, 4), new Size(7, 4));
-            Rectangle rect5 = new Rectangle(new Point(35, 0), new Size(2, 1));
-            Rectangle[] rectangleArray = { rect1, rect2, rect3, rect4, rect5 };
 
-            ScreenBuffer screenBuffer = new ScreenBuffer(80, 25);
-            for (int i = 0; i < rectangleArray.Length; i++)
+            ScreenBuffer screenBuffer = new ScreenBuffer(terminalWidth, terminalHeight - 2);
+            
+            int x = 40;
+            int y = 12;
+
+            Rectangle cursor = new Rectangle(new Point(x, y), new Size(1, 1));
+            Rectangle button = new Rectangle(new Point(5, 5), new Size(15, 5) );
+
+            while (true)
             {
-                DrawRectangle(rectangleArray[i], screenBuffer);
+                screenBuffer.Clear(white);
+                DrawButton(button, screenBuffer);
+                DrawRectangle(cursor, screenBuffer, darkGrey);
+                Console.WriteLine("{0} {1}", cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y);
+                screenBuffer.Flush();
+
+                var key = Console.ReadKey(false);
+                switch (key.Key)
+                {
+                    case ConsoleKey.LeftArrow:
+                        x--;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        x++;
+                        break;
+                    case ConsoleKey.UpArrow:
+                        y--;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        y++;
+                        break;
+                    case ConsoleKey.Escape:
+                        return;
+                }
+                cursor.LeftTopPoint = new Point(x, y);
             }
-            screenBuffer.Flush();
+        }
+
+        private static void DrawButton(Rectangle placeHolder, ScreenBuffer screenBuffer)
+        {
+            var border = placeHolder;
+            var newLeftTopPoint = new Point(placeHolder.LeftTopPoint.X + 1, placeHolder.LeftTopPoint.Y + 1);
+            var newSize = new Size(placeHolder.Size.GetWidth() - 2, placeHolder.Size.GetHeight() - 2);
+            var innerPlace = new Rectangle(newLeftTopPoint, newSize);
+            
+            DrawRectangle(border, screenBuffer, grey);
+            DrawRectangle(innerPlace, screenBuffer, lightGrey);
         }
 
         static void HelloWorldCentred()
@@ -60,17 +101,15 @@ namespace Exercise1
             }
         }
 
-        public static void DrawRectangle(Rectangle rectangle, ScreenBuffer screenBuffer)
+        public static void DrawRectangle(Rectangle rectangle, ScreenBuffer screenBuffer, char brush)
         {
-            const int terminalWidth = 80;
-            const int terminalHeight = 25;
-            for (int foregroundChar = 0; foregroundChar < terminalHeight; foregroundChar++)
+            for (int y = 0; y < screenBuffer.Height; y++)
             {
-                for (int backgroundChar = 0; backgroundChar < terminalWidth; backgroundChar++)
+                for (int x = 0; x < screenBuffer.Width; x++)
                 {
-                    Point pt = new Point(backgroundChar, foregroundChar);
-                    if (HitSubPrograms.HitRectangleFunction(rectangle, pt, true))
-                        screenBuffer.Write(backgroundChar, foregroundChar, '\u2588');
+                    Point pt = new Point(x, y);
+                    if (HitSubPrograms.HitRectangleFunction(rectangle, pt))
+                        screenBuffer.Write(x, y, brush);
                 }
             }
         }

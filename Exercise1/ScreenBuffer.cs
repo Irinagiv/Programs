@@ -47,20 +47,22 @@ namespace Exercise1
             return buffer[_width * y + x];
         }
 
-        public void Clear()
+        public void Clear(char color)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
-                buffer[i] = ' ';
+                buffer[i] = color;
             }
         }
 
         public void Flush()
         {
+            string output = string.Empty;
             for (int i = 0; i < buffer.Length; i++)
             {
-                Console.Write(buffer[i]);
+                output += buffer[i];
             }
+            Console.Write(output);
         }
     }
 }
