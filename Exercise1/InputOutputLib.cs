@@ -28,12 +28,13 @@ namespace Exercise1
             Rectangle button3 = new Rectangle(new Point(59, 5), new Size(15, 5));
             Rectangle[] buttonArray = { button1, button2, button3 };
 
+            screenBuffer.Clear(white);
             while (true)
             {
-                screenBuffer.Clear(white);
-
                 if (HitSubPrograms.HitRectangleFunction(button1, cursor.LeftTopPoint))
+                {
                     screenBuffer.Clear(brokenBar);
+                }
                 else
                     if (HitSubPrograms.HitRectangleFunction(button2, cursor.LeftTopPoint))
                         screenBuffer.Clear(upDownArrow);
@@ -46,7 +47,9 @@ namespace Exercise1
                 {
                     DrawButton(buttonArray[i], screenBuffer);
                 }
+
                 DrawRectangle(cursor, screenBuffer, darkGrey);
+
                 Console.WriteLine("{0} {1}", cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y);
                 screenBuffer.Flush();
 
@@ -55,15 +58,59 @@ namespace Exercise1
                 {
                     case ConsoleKey.LeftArrow:
                         x--;
+                        if (screenBuffer.Read(cursor.LeftTopPoint.X - 1, cursor.LeftTopPoint.Y) == white)
+                            screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, white);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X - 1, cursor.LeftTopPoint.Y) == brokenBar)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, brokenBar);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X - 1, cursor.LeftTopPoint.Y) == upDownArrow)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, upDownArrow);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X - 1, cursor.LeftTopPoint.Y) == black)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, black);
                         break;
                     case ConsoleKey.RightArrow:
                         x++;
+                        if (screenBuffer.Read(cursor.LeftTopPoint.X + 1, cursor.LeftTopPoint.Y) == white)
+                            screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, white);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X + 1, cursor.LeftTopPoint.Y) == brokenBar)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, brokenBar);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X + 1, cursor.LeftTopPoint.Y) == upDownArrow)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, upDownArrow);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X + 1, cursor.LeftTopPoint.Y) == black)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, black); 
                         break;
                     case ConsoleKey.UpArrow:
                         y--;
+                        if (screenBuffer.Read(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y - 1) == white)
+                            screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, white);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y - 1) == brokenBar)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, brokenBar);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y - 1) == upDownArrow)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, upDownArrow);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y - 1) == black)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, black);
                         break;
                     case ConsoleKey.DownArrow:
                         y++;
+                        if (screenBuffer.Read(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y + 1) == white)
+                            screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, white);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y + 1) == brokenBar)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, brokenBar);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y + 1) == upDownArrow)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, upDownArrow);
+                        else
+                            if (screenBuffer.Read(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y + 1) == black)
+                                screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, black);
                         break;
                     case ConsoleKey.Escape:
                         return;

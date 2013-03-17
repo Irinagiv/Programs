@@ -7,21 +7,21 @@ namespace Exercise1
 {
     class Size
     {
-        double _width;
-        double _height;
+        int _width;
+        int _height;
 
-        public Size(double width, double height)
+        public Size(int width, int height)
         {
             _width = width;
             _height = height;
         }
 
-        public double GetWidth()
+        public int GetWidth()
         {
             return _width;
         }
 
-        public void SetWidth(double value)
+        public void SetWidth(int value)
         {
             if (value >= 0)
             {
@@ -29,12 +29,12 @@ namespace Exercise1
             }
         }
 
-        public double GetHeight()
+        public int GetHeight()
         {
             return _height;
         }
 
-        public void SetHeight(double value)
+        public void SetHeight(int value)
         {
             if (value >= 0)
             {

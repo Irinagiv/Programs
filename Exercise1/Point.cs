@@ -7,22 +7,22 @@ namespace Exercise1
 {
     class Point
     {
-        double _x;
-        double _y;
+        int _x;
+        int _y;
 
-        public double X
+        public int X
         {
             get { return _x; }
             set { _x = value; }
         }
 
-        public double Y
+        public int Y
         {
             get { return _y; }
             set { _y = value; }
         }
 
-        public Point(double x, double y)
+        public Point(int x, int y)
         {
             _x = x;
             _y = y;
