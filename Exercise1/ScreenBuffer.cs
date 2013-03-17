@@ -10,6 +10,7 @@ namespace Exercise1
         int _width;
         int _height;
         char[] buffer;
+        public char background;
 
         // конструктор
         public ScreenBuffer(int width, int height)
@@ -49,6 +50,7 @@ namespace Exercise1
 
         public void Clear(char color)
         {
+            this.background = color;
             for (int i = 0; i < buffer.Length; i++)
             {
                 buffer[i] = color;
