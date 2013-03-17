@@ -7,27 +7,45 @@ namespace Exercise1
         const int terminalWidth = 80;
         const int terminalHeight = 25;
 
-        const char white = '\u2588';
-        const char lightGrey = '\u2593';
-        const char grey = '\u2592';
-        const char darkGrey = '\u2591';
+        const char white = '\u2588';         // символ фона
+        const char lightGrey = '\u2593';     // кнопка
+        const char grey = '\u2592';          // граница кнопки
+        const char darkGrey = '\u2591';      // курсор
+        const char brokenBar = '\u00A6';
+        const char upDownArrow = '\u2195';
         const char black = ' ';
 
         public static void Test()
         {
-
             ScreenBuffer screenBuffer = new ScreenBuffer(terminalWidth, terminalHeight - 2);
-            
+
             int x = 40;
             int y = 12;
 
             Rectangle cursor = new Rectangle(new Point(x, y), new Size(1, 1));
-            Rectangle button = new Rectangle(new Point(5, 5), new Size(15, 5) );
+            Rectangle button1 = new Rectangle(new Point(5, 5), new Size(15, 5));
+            Rectangle button2 = new Rectangle(new Point(32, 5), new Size(15, 5));
+            Rectangle button3 = new Rectangle(new Point(59, 5), new Size(15, 5));
+            Rectangle[] buttonArray = { button1, button2, button3 };
 
             while (true)
             {
                 screenBuffer.Clear(white);
-                DrawButton(button, screenBuffer);
+
+                if (HitSubPrograms.HitRectangleFunction(button1, cursor.LeftTopPoint))
+                    screenBuffer.Clear(brokenBar);
+                else
+                    if (HitSubPrograms.HitRectangleFunction(button2, cursor.LeftTopPoint))
+                        screenBuffer.Clear(upDownArrow);
+                    else
+                        if (HitSubPrograms.HitRectangleFunction(button3, cursor.LeftTopPoint))
+                            screenBuffer.Clear(black);
+
+
+                for (int i = 0; i < buttonArray.Length; i++)
+                {
+                    DrawButton(buttonArray[i], screenBuffer);
+                }
                 DrawRectangle(cursor, screenBuffer, darkGrey);
                 Console.WriteLine("{0} {1}", cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y);
                 screenBuffer.Flush();
