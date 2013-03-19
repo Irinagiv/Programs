@@ -31,10 +31,9 @@ namespace Exercise1
             screenBuffer.Clear(white);
             while (true)
             {
-                for (int i = 0; i < buttonArray.Length; i++)
-                {
-                    DrawButton(buttonArray[i], screenBuffer);
-                }
+                DrawButton(button1, screenBuffer, "brokenBar");
+                DrawButton(button2, screenBuffer, "upDownArrow");
+                DrawButton(button3, screenBuffer, "black");
 
                 DrawRectangle(cursor, screenBuffer, darkGrey);
 
@@ -77,7 +76,7 @@ namespace Exercise1
             }
         }
 
-        private static void DrawButton(Rectangle placeHolder, ScreenBuffer screenBuffer)
+        private static void DrawButton(Rectangle placeHolder, ScreenBuffer screenBuffer, string name)
         {
             var border = placeHolder;
             var newLeftTopPoint = new Point(placeHolder.LeftTopPoint.X + 1, placeHolder.LeftTopPoint.Y + 1);
@@ -86,6 +85,15 @@ namespace Exercise1
             
             DrawRectangle(border, screenBuffer, grey);
             DrawRectangle(innerPlace, screenBuffer, lightGrey);
+            WriteButtonName(name, newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, screenBuffer);
+        }
+
+        private static void WriteButtonName(string str, int xCoord, int yCoord, ScreenBuffer screenbuffer)
+        {
+            for (int i = 0; i < str.Length; i++)
+            {
+                screenbuffer.Write(xCoord + i, yCoord, str[i]);
+            }
         }
 
         static void HelloWorldCentred()
