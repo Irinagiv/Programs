@@ -28,9 +28,11 @@ namespace Exercise1
             Rectangle button3 = new Rectangle(new Point(59, 5), new Size(15, 5));
             Rectangle[] buttonArray = { button1, button2, button3 };
 
-            screenBuffer.Clear(white);
+            screenBuffer.background = white;
             while (true)
             {
+                screenBuffer.Clear();
+
                 DrawButton(button1, screenBuffer, "brokenBar");
                 DrawButton(button2, screenBuffer, "upDownArrow");
                 DrawButton(button3, screenBuffer, "black");
@@ -45,19 +47,15 @@ namespace Exercise1
                 {
                     case ConsoleKey.LeftArrow:
                         x--;
-                        screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, screenBuffer.background);
                         break;
                     case ConsoleKey.RightArrow:
                         x++;
-                        screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, screenBuffer.background);
                         break;
                     case ConsoleKey.UpArrow:
                         y--;
-                        screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, screenBuffer.background);
                         break;
                     case ConsoleKey.DownArrow:
                         y++;
-                        screenBuffer.Write(cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y, screenBuffer.background);
                         break;
                     case ConsoleKey.Spacebar:
                         if (HitSubPrograms.HitRectangleFunction(button1, cursor.LeftTopPoint))

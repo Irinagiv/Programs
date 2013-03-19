@@ -57,6 +57,14 @@ namespace Exercise1
             }
         }
 
+        public void Clear()
+        {
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                buffer[i] = background;
+            }
+        }
+
         public void Flush()
         {
             string output = string.Empty;
