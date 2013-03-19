@@ -27,15 +27,17 @@ namespace Exercise1
             Rectangle button2 = new Rectangle(new Point(32, 5), new Size(15, 5));
             Rectangle button3 = new Rectangle(new Point(59, 5), new Size(15, 5));
             Rectangle[] buttonArray = { button1, button2, button3 };
+            string[] backgroundColorArray = { "brokenBar", "upDownArrow", "black"};
 
             screenBuffer.background = white;
             while (true)
             {
                 screenBuffer.Clear();
 
-                DrawButton(button1, screenBuffer, "brokenBar");
-                DrawButton(button2, screenBuffer, "upDownArrow");
-                DrawButton(button3, screenBuffer, "black");
+                for (int i = 0; i < buttonArray.Length; i++)
+                {
+                    DrawButton(buttonArray[i], screenBuffer, backgroundColorArray[i]);
+                }
 
                 DrawRectangle(cursor, screenBuffer, darkGrey);
 
