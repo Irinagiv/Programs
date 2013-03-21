@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using GeometryLib;
 
-namespace Exercise1
+namespace GraphicsLib
 {
-    static class InputOutputLib
+    public class GraphicsSubPrograms
     {
         const int terminalWidth = 80;
         const int terminalHeight = 25;
@@ -27,7 +31,7 @@ namespace Exercise1
             Rectangle button2 = new Rectangle(new Point(32, 5), new Size(15, 5));
             Rectangle button3 = new Rectangle(new Point(59, 5), new Size(15, 5));
             Rectangle[] buttonArray = { button1, button2, button3 };
-            string[] backgroundColorArray = { "brokenBar", "upDownArrow", "black"};
+            string[] backgroundColorArray = { "brokenBar", "upDownArrow", "black" };
 
             screenBuffer.background = white;
             while (true)
@@ -65,9 +69,9 @@ namespace Exercise1
                         else
                             if (HitSubPrograms.HitRectangleFunction(button2, cursor.LeftTopPoint))
                                 screenBuffer.Clear(upDownArrow);
-                        else
-                            if (HitSubPrograms.HitRectangleFunction(button3, cursor.LeftTopPoint))
-                                screenBuffer.Clear(black);
+                            else
+                                if (HitSubPrograms.HitRectangleFunction(button3, cursor.LeftTopPoint))
+                                    screenBuffer.Clear(black);
                         break;
                     case ConsoleKey.Escape:
                         return;
@@ -82,7 +86,7 @@ namespace Exercise1
             var newLeftTopPoint = new Point(placeHolder.LeftTopPoint.X + 1, placeHolder.LeftTopPoint.Y + 1);
             var newSize = new Size(placeHolder.Size.GetWidth() - 2, placeHolder.Size.GetHeight() - 2);
             var innerPlace = new Rectangle(newLeftTopPoint, newSize);
-            
+
             DrawRectangle(border, screenBuffer, grey);
             DrawRectangle(innerPlace, screenBuffer, lightGrey);
             WriteButtonName(name, newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, screenBuffer);
@@ -93,42 +97,6 @@ namespace Exercise1
             for (int i = 0; i < str.Length; i++)
             {
                 screenbuffer.Write(xCoord + i, yCoord, str[i]);
-            }
-        }
-
-        static void HelloWorldCentred()
-        {
-            const int width = 80;
-            const int wordLength = 5;
-            int middlePageLength = width / 2 - wordLength / 2;
-            AddEmptyLine(middlePageLength);
-            Console.Write('H');
-            Console.Write('e');
-            Console.Write('l');
-            Console.Write('l');
-            Console.Write('o');
-            Console.Write('\n');
-            AddEmptyLine(middlePageLength);
-            Console.Write('w');
-            Console.Write('o');
-            Console.Write('r');
-            Console.Write('l');
-            Console.Write('d');
-        }
-
-        static void AddEmptyLine(int length)
-        {
-            for (int i = 0; i < length; i++)
-            {
-                Console.Write(' ');
-            }
-        }
-
-        static void AddNewLines(int count)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                Console.Write('\n');
             }
         }
 
@@ -143,26 +111,6 @@ namespace Exercise1
                         screenBuffer.Write(x, y, brush);
                 }
             }
-        }
-
-        public static int ReadInt()
-        {
-            int accumulatedNumber = 0;
-            int ch = Console.Read();
-            while (ch != '\n')
-            {
-                if (IsDigit((char)ch))
-                    accumulatedNumber = accumulatedNumber * 10 + ch - '0';
-                ch = Console.Read();
-            }
-
-            return accumulatedNumber;
-        }
-
-        static bool IsDigit(char ch)
-        {
-            bool res = HitSubPrograms.Between('0', ch, '9');
-            return res; 
         }
     }
 }

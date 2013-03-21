@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Exercise1
+namespace GeometryLib
 {
-    class Size
+    public class Size
     {
         int _width;
         int _height;

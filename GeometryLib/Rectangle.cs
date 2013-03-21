@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Exercise1
+namespace GeometryLib
 {
-    class Rectangle
+    public class Rectangle
     {
         public Point LeftTopPoint { get; set; }
         public Size Size { get; set; }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Exercise1
+namespace GraphicsLib
 {
-    class ScreenBuffer
+    public class ScreenBuffer
     {
         int _width;
         int _height;
