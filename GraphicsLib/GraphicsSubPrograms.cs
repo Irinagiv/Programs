@@ -92,11 +92,11 @@ namespace GraphicsLib
             WriteButtonName(name, newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, screenBuffer);
         }
 
-        private static void WriteButtonName(string str, int xCoord, int yCoord, ScreenBuffer screenbuffer)
+        private static void WriteButtonName(string str, int xCoord, int yCoord, ScreenBuffer screenBuffer)
         {
             for (int i = 0; i < str.Length; i++)
             {
-                screenbuffer.Write(xCoord + i, yCoord, str[i]);
+                screenBuffer.Write(xCoord + i, yCoord, str[i]);
             }
         }
 

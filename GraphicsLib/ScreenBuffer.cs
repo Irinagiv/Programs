@@ -7,9 +7,9 @@ namespace GraphicsLib
 {
     public class ScreenBuffer
     {
-        int _width;
-        int _height;
-        char[] buffer;
+        public int _width;
+        public int _height;
+        public char[] buffer;
         public char background;
 
         // конструктор
