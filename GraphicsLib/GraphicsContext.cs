@@ -6,43 +6,37 @@ using GeometryLib;
 
 namespace GraphicsLib
 {
-    class GraphicsContext
+    public class GraphicsContext
     {
         public ScreenBuffer screenBuffer;
 
-        const int terminalWidth = 80;
-        const int terminalHeight = 25;
+        public GraphicsContext(int width, int height)
+        {
+            screenBuffer.Width = width;
+            screenBuffer.Height = height;
+        }
 
-        const char white = '\u2588';         
-        const char lightGrey = '\u2593';     
-        const char grey = '\u2592';          
-        const char darkGrey = '\u2591';      
-        const char brokenBar = '\u00A6';
-        const char upDownArrow = '\u2195';
-        const char black = ' ';
+        public static readonly char white = '\u2588';
+        public static readonly char lightGrey = '\u2593';
+        public static readonly char grey = '\u2592';
+        public static readonly char darkGrey = '\u2591';
+        public static readonly char brokenBar = '\u00A6';
+        public static readonly char upDownArrow = '\u2195';
+        public static readonly char black = ' ';
 
         public void Clear(char color)
         {
-            for (int i = 0; i < screenBuffer.buffer.Length; i++)
-            {
-                screenBuffer.buffer[i] = color;
-            }
+            screenBuffer.Clear(color);
         }
 
         public void Clear()
         {
-            for (int i = 0; i < screenBuffer.buffer.Length; i++)
-            {
-                screenBuffer.buffer[i] = white;
-            }
+            screenBuffer.Clear();
         }
 
         public void ToScreen()
         {
-            for (int i = 0; i < screenBuffer.buffer.Length; i++)
-            {
-                Console.Write(screenBuffer.buffer[i]);
-            }
+            screenBuffer.Flush();
         }
 
         public void DrawText(int x, int y, string text)
@@ -53,29 +47,23 @@ namespace GraphicsLib
             }
         }
 
-        public void DrawRectangle(Rectangle rectangle, char color)
+        public void DrawRectangle(Rectangle rectangle, char brush)
         {
-            for (int i = 0; i < terminalHeight; i++)
+            for (int y = 0; y < screenBuffer.Height; y++)
             {
-                for (int j = 0; j < terminalWidth; j++)
+                for (int x = 0; x < screenBuffer.Width; x++)
                 {
-                    Point pt = new Point(j, i);
-                    if (HitSubPrograms.HitRectangleFunction(rectangle, pt, true))
-                        Console.Write(color);
-                    else
-                        Console.Write(' ');
+                    Point pt = new Point(x, y);
+                    if (HitSubPrograms.HitRectangleFunction(rectangle, pt))
+                        screenBuffer.Write(x, y, brush);
                 }
             }
         }
 
         public void DrawRectangle(Point pt, Size size, char brush)
         {
-            int startIndex = screenBuffer._width * pt.Y + pt.X;
-            int endIndex = screenBuffer._width * (pt.Y + size.GetHeight()) + (pt.X + size.GetWidth());
-            for (int i = startIndex; i < endIndex; i++)
-            {
-                screenBuffer.buffer[i] = brush;
-            }
+            Rectangle rectangle = new Rectangle(pt, size);
+            DrawRectangle(rectangle, brush);
         }
     }
 }

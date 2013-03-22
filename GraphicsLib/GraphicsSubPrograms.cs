@@ -11,17 +11,11 @@ namespace GraphicsLib
         const int terminalWidth = 80;
         const int terminalHeight = 25;
 
-        const char white = '\u2588';         // символ фона
-        const char lightGrey = '\u2593';     // кнопка
-        const char grey = '\u2592';          // граница кнопки
-        const char darkGrey = '\u2591';      // курсор
-        const char brokenBar = '\u00A6';
-        const char upDownArrow = '\u2195';
-        const char black = ' ';
-
         public static void Test()
         {
-            ScreenBuffer screenBuffer = new ScreenBuffer(terminalWidth, terminalHeight - 2);
+            GraphicsContext graphicsContext = new GraphicsContext(terminalWidth, terminalHeight - 2);
+
+            //ScreenBuffer screenBuffer = new ScreenBuffer(terminalWidth, terminalHeight - 2);
 
             int x = 40;
             int y = 12;
@@ -33,20 +27,24 @@ namespace GraphicsLib
             Rectangle[] buttonArray = { button1, button2, button3 };
             string[] backgroundColorArray = { "brokenBar", "upDownArrow", "black" };
 
-            screenBuffer.background = white;
+            graphicsContext.Clear(white);
+            //screenBuffer.background = white;
             while (true)
             {
-                screenBuffer.Clear();
+                graphicsContext.Clear();
+                //screenBuffer.Clear();
 
                 for (int i = 0; i < buttonArray.Length; i++)
                 {
-                    DrawButton(buttonArray[i], screenBuffer, backgroundColorArray[i]);
+                    DrawButton(buttonArray[i], graphicsContext, backgroundColorArray[i]);
                 }
 
-                DrawRectangle(cursor, screenBuffer, darkGrey);
+                graphicsContext.DrawRectangle(cursor, darkGrey);
+                //DrawRectangle(cursor, screenBuffer, darkGrey);
 
                 Console.WriteLine("{0} {1}", cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y);
-                screenBuffer.Flush();
+                graphicsContext.ToScreen();
+                //screenBuffer.Flush();
 
                 var key = Console.ReadKey(false);
                 switch (key.Key)
@@ -65,13 +63,16 @@ namespace GraphicsLib
                         break;
                     case ConsoleKey.Spacebar:
                         if (HitSubPrograms.HitRectangleFunction(button1, cursor.LeftTopPoint))
-                            screenBuffer.Clear(brokenBar);
+                            graphicsContext.Clear(brokenBar);
+                            //screenBuffer.Clear(brokenBar);
                         else
                             if (HitSubPrograms.HitRectangleFunction(button2, cursor.LeftTopPoint))
-                                screenBuffer.Clear(upDownArrow);
+                                graphicsContext.Clear(upDownArrow);
+                                //screenBuffer.Clear(upDownArrow);
                             else
                                 if (HitSubPrograms.HitRectangleFunction(button3, cursor.LeftTopPoint))
-                                    screenBuffer.Clear(black);
+                                    graphicsContext.Clear(black);
+                                    //screenBuffer.Clear(black);
                         break;
                     case ConsoleKey.Escape:
                         return;
@@ -80,37 +81,19 @@ namespace GraphicsLib
             }
         }
 
-        private static void DrawButton(Rectangle placeHolder, ScreenBuffer screenBuffer, string name)
+        private static void DrawButton(Rectangle placeHolder, GraphicsContext graphicsContext, string name)
         {
             var border = placeHolder;
             var newLeftTopPoint = new Point(placeHolder.LeftTopPoint.X + 1, placeHolder.LeftTopPoint.Y + 1);
             var newSize = new Size(placeHolder.Size.GetWidth() - 2, placeHolder.Size.GetHeight() - 2);
             var innerPlace = new Rectangle(newLeftTopPoint, newSize);
 
-            DrawRectangle(border, screenBuffer, grey);
-            DrawRectangle(innerPlace, screenBuffer, lightGrey);
-            WriteButtonName(name, newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, screenBuffer);
-        }
-
-        private static void WriteButtonName(string str, int xCoord, int yCoord, ScreenBuffer screenBuffer)
-        {
-            for (int i = 0; i < str.Length; i++)
-            {
-                screenBuffer.Write(xCoord + i, yCoord, str[i]);
-            }
-        }
-
-        public static void DrawRectangle(Rectangle rectangle, ScreenBuffer screenBuffer, char brush)
-        {
-            for (int y = 0; y < screenBuffer.Height; y++)
-            {
-                for (int x = 0; x < screenBuffer.Width; x++)
-                {
-                    Point pt = new Point(x, y);
-                    if (HitSubPrograms.HitRectangleFunction(rectangle, pt))
-                        screenBuffer.Write(x, y, brush);
-                }
-            }
+            graphicsContext.DrawRectangle(border, grey);
+            //DrawRectangle(border, screenBuffer, grey);
+            graphicsContext.DrawRectangle(border, lightGrey);
+            //DrawRectangle(innerPlace, screenBuffer, lightGrey);
+            graphicsContext.DrawText(newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, name);
+            //WriteButtonName(name, newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, screenBuffer);
         }
     }
 }
