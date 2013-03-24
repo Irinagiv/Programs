@@ -12,8 +12,7 @@ namespace GraphicsLib
 
         public GraphicsContext(int width, int height)
         {
-            screenBuffer.Width = width;
-            screenBuffer.Height = height;
+            screenBuffer = new ScreenBuffer(width, height);
         }
 
         public static readonly char white = '\u2588';
@@ -31,7 +30,7 @@ namespace GraphicsLib
 
         public void Clear()
         {
-            screenBuffer.Clear();
+            Clear(white);
         }
 
         public void ToScreen()

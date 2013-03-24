@@ -10,7 +10,7 @@ namespace GraphicsLib
         int _width;
         int _height;
         char[] buffer;
-        char background;
+        public char background;
 
         // конструктор
         public ScreenBuffer(int width, int height)

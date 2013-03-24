@@ -27,11 +27,11 @@ namespace GraphicsLib
             Rectangle[] buttonArray = { button1, button2, button3 };
             string[] backgroundColorArray = { "brokenBar", "upDownArrow", "black" };
 
-            graphicsContext.Clear(white);
+            graphicsContext.Clear();
             //screenBuffer.background = white;
             while (true)
             {
-                graphicsContext.Clear();
+                graphicsContext.Clear(graphicsContext.screenBuffer.background);
                 //screenBuffer.Clear();
 
                 for (int i = 0; i < buttonArray.Length; i++)
@@ -39,7 +39,7 @@ namespace GraphicsLib
                     DrawButton(buttonArray[i], graphicsContext, backgroundColorArray[i]);
                 }
 
-                graphicsContext.DrawRectangle(cursor, darkGrey);
+                graphicsContext.DrawRectangle(cursor, GraphicsContext.darkGrey);
                 //DrawRectangle(cursor, screenBuffer, darkGrey);
 
                 Console.WriteLine("{0} {1}", cursor.LeftTopPoint.X, cursor.LeftTopPoint.Y);
@@ -63,15 +63,15 @@ namespace GraphicsLib
                         break;
                     case ConsoleKey.Spacebar:
                         if (HitSubPrograms.HitRectangleFunction(button1, cursor.LeftTopPoint))
-                            graphicsContext.Clear(brokenBar);
+                            graphicsContext.Clear(GraphicsContext.brokenBar);
                             //screenBuffer.Clear(brokenBar);
                         else
                             if (HitSubPrograms.HitRectangleFunction(button2, cursor.LeftTopPoint))
-                                graphicsContext.Clear(upDownArrow);
+                                graphicsContext.Clear(GraphicsContext.upDownArrow);
                                 //screenBuffer.Clear(upDownArrow);
                             else
                                 if (HitSubPrograms.HitRectangleFunction(button3, cursor.LeftTopPoint))
-                                    graphicsContext.Clear(black);
+                                    graphicsContext.Clear(GraphicsContext.black);
                                     //screenBuffer.Clear(black);
                         break;
                     case ConsoleKey.Escape:
@@ -88,9 +88,9 @@ namespace GraphicsLib
             var newSize = new Size(placeHolder.Size.GetWidth() - 2, placeHolder.Size.GetHeight() - 2);
             var innerPlace = new Rectangle(newLeftTopPoint, newSize);
 
-            graphicsContext.DrawRectangle(border, grey);
+            graphicsContext.DrawRectangle(border, GraphicsContext.grey);
             //DrawRectangle(border, screenBuffer, grey);
-            graphicsContext.DrawRectangle(border, lightGrey);
+            graphicsContext.DrawRectangle(innerPlace, GraphicsContext.lightGrey);
             //DrawRectangle(innerPlace, screenBuffer, lightGrey);
             graphicsContext.DrawText(newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, name);
             //WriteButtonName(name, newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, screenBuffer);
