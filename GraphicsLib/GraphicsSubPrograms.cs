@@ -23,7 +23,8 @@ namespace GraphicsLib
             Rectangle button2 = new Rectangle(new Point(32, 5), new Size(15, 5));
             Rectangle button3 = new Rectangle(new Point(59, 5), new Size(15, 5));
             Rectangle[] buttonArray = { button1, button2, button3 };
-            string[] backgroundColorArray = { "brokenBar", "upDownArrow", "black" };
+            string[] backgroundColorNameArray = { "brokenBar", "upDownArrow", "black" };
+            char[] backgroundColorArray = { GraphicsContext.brokenBar, GraphicsContext.upDownArrow, GraphicsContext.black };
 
             graphicsContext.backgroundColor = GraphicsContext.white;
             while (true)
@@ -32,7 +33,7 @@ namespace GraphicsLib
                 
                 for (int i = 0; i < buttonArray.Length; i++)
                 {
-                    DrawButton(buttonArray[i], graphicsContext, backgroundColorArray[i]);
+                    DrawButton(buttonArray[i], graphicsContext, backgroundColorNameArray[i]);
                 }
 
                 graphicsContext.DrawRectangle(cursor, GraphicsContext.darkGrey);
@@ -56,14 +57,11 @@ namespace GraphicsLib
                         y++;
                         break;
                     case ConsoleKey.Spacebar:
-                        if (HitSubPrograms.HitRectangleFunction(button1, cursor.LeftTopPoint))
-                            graphicsContext.backgroundColor = GraphicsContext.brokenBar;
-                        else
-                            if (HitSubPrograms.HitRectangleFunction(button2, cursor.LeftTopPoint))
-                                graphicsContext.backgroundColor = GraphicsContext.upDownArrow;
-                            else
-                                if (HitSubPrograms.HitRectangleFunction(button3, cursor.LeftTopPoint))
-                                    graphicsContext.backgroundColor = GraphicsContext.black;
+                        for (int i = 0; i < buttonArray.Length; i++)
+                        {
+                            if (HitSubPrograms.HitRectangleFunction(buttonArray[i], cursor.LeftTopPoint))
+                                graphicsContext.backgroundColor = backgroundColorArray[i];
+                        }
                         break;
                     case ConsoleKey.Escape:
                         return;
