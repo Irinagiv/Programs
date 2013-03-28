@@ -9,6 +9,13 @@ namespace GraphicsLib
     public class GraphicsContext
     {
         public ScreenBuffer screenBuffer;
+        public char backgroundColor;
+
+        public char BackgroundColor
+        {
+            get { return backgroundColor; }
+            set { backgroundColor = value; }
+        }
 
         public GraphicsContext(int width, int height)
         {
@@ -23,14 +30,9 @@ namespace GraphicsLib
         public static readonly char upDownArrow = '\u2195';
         public static readonly char black = ' ';
 
-        public void Clear(char color)
-        {
-            screenBuffer.Clear(color);
-        }
-
         public void Clear()
         {
-            Clear(white);
+            screenBuffer.Fill(backgroundColor);
         }
 
         public void ToScreen()

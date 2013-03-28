@@ -10,7 +10,6 @@ namespace GraphicsLib
         int _width;
         int _height;
         char[] buffer;
-        public char background;
 
         // конструктор
         public ScreenBuffer(int width, int height)
@@ -48,20 +47,11 @@ namespace GraphicsLib
             return buffer[_width * y + x];
         }
 
-        public void Clear(char color)
+        public void Fill(char color)
         {
-            this.background = color;
             for (int i = 0; i < buffer.Length; i++)
             {
                 buffer[i] = color;
-            }
-        }
-
-        public void Clear()
-        {
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                buffer[i] = background;
             }
         }
 
