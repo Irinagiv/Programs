@@ -11,6 +11,8 @@ namespace GraphicsLib
         const int terminalWidth = 80;
         const int terminalHeight = 25;
 
+        delegate void ButtonClick(GraphicsContext graphicsContext);
+        
         public static void Test()
         {
             GraphicsContext graphicsContext = new GraphicsContext(terminalWidth, terminalHeight - 2);
@@ -24,7 +26,11 @@ namespace GraphicsLib
             Rectangle button3 = new Rectangle(new Point(59, 5), new Size(15, 5));
             Rectangle[] buttonArray = { button1, button2, button3 };
             string[] backgroundColorNameArray = { "brokenBar", "upDownArrow", "black" };
-            char[] backgroundColorArray = { GraphicsContext.brokenBar, GraphicsContext.upDownArrow, GraphicsContext.black };
+
+            ButtonClick[] btnClick = new ButtonClick[3];
+            btnClick[0] = BackgroundFill1;
+            btnClick[1] = BackgroundFill2;
+            btnClick[2] = BackgroundFill3;
 
             graphicsContext.backgroundColor = GraphicsContext.white;
             while (true)
@@ -60,7 +66,7 @@ namespace GraphicsLib
                         for (int i = 0; i < buttonArray.Length; i++)
                         {
                             if (HitSubPrograms.HitRectangleFunction(buttonArray[i], cursor.LeftTopPoint))
-                                graphicsContext.backgroundColor = backgroundColorArray[i];
+                                btnClick[i](graphicsContext);
                         }
                         break;
                     case ConsoleKey.Escape:
@@ -68,6 +74,21 @@ namespace GraphicsLib
                 }
                 cursor.LeftTopPoint = new Point(x, y);
             }
+        }
+
+        private static void BackgroundFill1(GraphicsContext graphicsContext)
+        {
+            graphicsContext.backgroundColor = GraphicsContext.brokenBar;
+        }
+
+        private static void BackgroundFill2(GraphicsContext graphicsContext)
+        {
+            graphicsContext.backgroundColor = GraphicsContext.upDownArrow;
+        }
+
+        private static void BackgroundFill3(GraphicsContext graphicsContext)
+        {
+            graphicsContext.backgroundColor = GraphicsContext.black;
         }
 
         private static void DrawButton(Rectangle placeHolder, GraphicsContext graphicsContext, string name)
