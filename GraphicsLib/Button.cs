@@ -12,7 +12,7 @@ namespace GraphicsLib
         private Point leftTopPoint;
         private Size size;
 
-        delegate void ButtonClick(GraphicsContext graphicsContext);
+        public delegate void ButtonClick(GraphicsContext graphicsContext);
         private ButtonClick btnClick;
 
         public string Title
@@ -50,19 +50,7 @@ namespace GraphicsLib
             graphicsContext.DrawRectangle(new Point(leftTopPoint.X + 1, leftTopPoint.Y + 1),
                                           new Size(size.GetWidth() - 2, size.GetHeight() - 2),
                                           GraphicsContext.lightGrey);
-            graphicsContext.DrawText(leftTopPoint.X + 3, leftTopPoint.Y + 3, title);
+            graphicsContext.DrawText(leftTopPoint.X + 3, leftTopPoint.Y + 2, title);
         }
-
-        //private static void DrawButton(Rectangle placeHolder, GraphicsContext graphicsContext, string name)
-        //{
-        //    var border = placeHolder;
-        //    var newLeftTopPoint = new Point(placeHolder.LeftTopPoint.X + 1, placeHolder.LeftTopPoint.Y + 1);
-        //    var newSize = new Size(placeHolder.Size.GetWidth() - 2, placeHolder.Size.GetHeight() - 2);
-        //    var innerPlace = new Rectangle(newLeftTopPoint, newSize);
-
-        //    graphicsContext.DrawRectangle(border, GraphicsContext.grey);
-        //    graphicsContext.DrawRectangle(innerPlace, GraphicsContext.lightGrey);
-        //    graphicsContext.DrawText(newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, name);
-        //}
     }
 }
