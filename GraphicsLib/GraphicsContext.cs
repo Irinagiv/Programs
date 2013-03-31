@@ -8,8 +8,8 @@ namespace GraphicsLib
 {
     public class GraphicsContext
     {
-        public ScreenBuffer screenBuffer;
-        public char backgroundColor;
+        private ScreenBuffer screenBuffer;
+        private char backgroundColor;
 
         public char BackgroundColor
         {

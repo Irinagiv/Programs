@@ -11,7 +11,7 @@ namespace GraphicsLib
         const int terminalWidth = 80;
         const int terminalHeight = 25;
 
-        delegate void ButtonClick(GraphicsContext graphicsContext);
+        //delegate void ButtonClick(GraphicsContext graphicsContext);
         
         public static void Test()
         {
@@ -21,25 +21,35 @@ namespace GraphicsLib
             int y = 12;
 
             Rectangle cursor = new Rectangle(new Point(x, y), new Size(1, 1));
-            Rectangle button1 = new Rectangle(new Point(5, 5), new Size(15, 5));
-            Rectangle button2 = new Rectangle(new Point(32, 5), new Size(15, 5));
-            Rectangle button3 = new Rectangle(new Point(59, 5), new Size(15, 5));
-            Rectangle[] buttonArray = { button1, button2, button3 };
-            string[] backgroundColorNameArray = { "brokenBar", "upDownArrow", "black" };
+            
+            Button[] buttonArray = {new Button{ Title = "brokenBar", Position = new Point(5, 5), Size = new Size(15, 5) },
+                                    new Button{ Title = "upDownArrow", Position = new Point(32, 5), Size = new Size(15, 5) },
+                                    new Button{ Title = "black", Position = new Point(59, 5), Size = new Size(15, 5) }};
 
-            ButtonClick[] btnClick = new ButtonClick[3];
-            btnClick[0] = BackgroundFill1;
-            btnClick[1] = BackgroundFill2;
-            btnClick[2] = BackgroundFill3;
+            //Rectangle button1 = new Rectangle(new Point(5, 5), new Size(15, 5));
+            //Rectangle button2 = new Rectangle(new Point(32, 5), new Size(15, 5));
+            //Rectangle button3 = new Rectangle(new Point(59, 5), new Size(15, 5));
+            //Rectangle[] buttonArray = { button1, button2, button3 };
+            //string[] backgroundColorNameArray = { "brokenBar", "upDownArrow", "black" };
 
-            graphicsContext.backgroundColor = GraphicsContext.white;
+            buttonArray[0].ClickHandler = BackgroundFill1;
+            buttonArray[1].ClickHandler = BackgroundFill2;
+            buttonArray[2].ClickHandler = BackgroundFill3;
+
+            //ButtonClick[] btnClick = new ButtonClick[3];
+            //btnClick[0] = BackgroundFill1;
+            //btnClick[1] = BackgroundFill2;
+            //btnClick[2] = BackgroundFill3;
+
+            graphicsContext.BackgroundColor = GraphicsContext.white;
             while (true)
             {
                 graphicsContext.Clear();
                 
                 for (int i = 0; i < buttonArray.Length; i++)
                 {
-                    DrawButton(buttonArray[i], graphicsContext, backgroundColorNameArray[i]);
+                    buttonArray[i].Draw(graphicsContext);
+                    //DrawButton(buttonArray[i], graphicsContext, backgroundColorNameArray[i]);
                 }
 
                 graphicsContext.DrawRectangle(cursor, GraphicsContext.darkGrey);
@@ -65,8 +75,11 @@ namespace GraphicsLib
                     case ConsoleKey.Spacebar:
                         for (int i = 0; i < buttonArray.Length; i++)
                         {
-                            if (HitSubPrograms.HitRectangleFunction(buttonArray[i], cursor.LeftTopPoint))
-                                btnClick[i](graphicsContext);
+                            if (buttonArray[i].IsUnderCursor(cursor.LeftTopPoint))
+                                buttonArray[i].ClickHandler(graphicsContext);
+
+                            //if (HitSubPrograms.HitRectangleFunction(buttonArray[i], cursor.LeftTopPoint))
+                            //    btnClick[i](graphicsContext);
                         }
                         break;
                     case ConsoleKey.Escape:
@@ -78,29 +91,17 @@ namespace GraphicsLib
 
         private static void BackgroundFill1(GraphicsContext graphicsContext)
         {
-            graphicsContext.backgroundColor = GraphicsContext.brokenBar;
+            graphicsContext.BackgroundColor = GraphicsContext.brokenBar;
         }
 
         private static void BackgroundFill2(GraphicsContext graphicsContext)
         {
-            graphicsContext.backgroundColor = GraphicsContext.upDownArrow;
+            graphicsContext.BackgroundColor = GraphicsContext.upDownArrow;
         }
 
         private static void BackgroundFill3(GraphicsContext graphicsContext)
         {
-            graphicsContext.backgroundColor = GraphicsContext.black;
-        }
-
-        private static void DrawButton(Rectangle placeHolder, GraphicsContext graphicsContext, string name)
-        {
-            var border = placeHolder;
-            var newLeftTopPoint = new Point(placeHolder.LeftTopPoint.X + 1, placeHolder.LeftTopPoint.Y + 1);
-            var newSize = new Size(placeHolder.Size.GetWidth() - 2, placeHolder.Size.GetHeight() - 2);
-            var innerPlace = new Rectangle(newLeftTopPoint, newSize);
-
-            graphicsContext.DrawRectangle(border, GraphicsContext.grey);
-            graphicsContext.DrawRectangle(innerPlace, GraphicsContext.lightGrey);
-            graphicsContext.DrawText(newLeftTopPoint.X + 2, newLeftTopPoint.Y + 1, name);
-        }
+            graphicsContext.BackgroundColor = GraphicsContext.black;
+        } 
     }
 }
