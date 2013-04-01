@@ -22,12 +22,12 @@ namespace GraphicsLib
         // методы
         public void Write(int x, int y, char value)
         {
-            buffer[Width * y + x] = value;
+            buffer[Size.GetWidth() * y + x] = value;
         }
 
         public char Read(int x, int y)
         {
-            return buffer[Width * y + x];
+            return buffer[Size.GetWidth() * y + x];
         }
 
         public void Fill(char color)

@@ -32,7 +32,7 @@ namespace GraphicsLib
 
         public Size CanvasSize 
         {
-            get { return new Size(screenBuffer.Width, screenBuffer.Height); }
+            get { return screenBuffer.Size; }
         }
 
         public void Clear()
@@ -55,9 +55,9 @@ namespace GraphicsLib
 
         public void DrawRectangle(Rectangle rectangle, char brush)
         {
-            for (int y = 0; y < screenBuffer.Height; y++)
+            for (int y = 0; y < screenBuffer.Size.GetHeight(); y++)
             {
-                for (int x = 0; x < screenBuffer.Width; x++)
+                for (int x = 0; x < screenBuffer.Size.GetWidth(); x++)
                 {
                     Point pt = new Point(x, y);
                     if (HitSubPrograms.HitRectangleFunction(rectangle, pt))
