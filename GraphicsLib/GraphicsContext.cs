@@ -30,6 +30,11 @@ namespace GraphicsLib
         public static readonly char upDownArrow = '\u2195';
         public static readonly char black = ' ';
 
+        public Size CanvasSize 
+        {
+            get { return new Size(screenBuffer.Width, screenBuffer.Height); }
+        }
+
         public void Clear()
         {
             screenBuffer.Fill(backgroundColor);
@@ -66,5 +71,7 @@ namespace GraphicsLib
             Rectangle rectangle = new Rectangle(pt, size);
             DrawRectangle(rectangle, brush);
         }
+
+
     }
 }

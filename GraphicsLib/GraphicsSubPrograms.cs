@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using GeometryLib;
 
 namespace GraphicsLib
@@ -13,29 +10,47 @@ namespace GraphicsLib
 
         public static void Test()
         {
-            GraphicsContext graphicsContext = new GraphicsContext(terminalWidth, terminalHeight - 2);
+            const int nonBufferZoneHeight = 2;
+            GraphicsContext graphicsContext = new GraphicsContext(terminalWidth, terminalHeight - nonBufferZoneHeight);
 
-            int x = 40;
-            int y = 12;
+            int x = graphicsContext.CanvasSize.GetWidth() / 2;
+            int y = graphicsContext.CanvasSize.GetHeight() / 2;
 
             Rectangle cursor = new Rectangle(new Point(x, y), new Size(1, 1));
             
-            Button[] buttonArray = {new Button{ Title = "brokenBar", Position = new Point(5, 5), Size = new Size(15, 5) },
-                                    new Button{ Title = "upDownArrow", Position = new Point(32, 5), Size = new Size(15, 5) },
-                                    new Button{ Title = "black", Position = new Point(59, 5), Size = new Size(15, 5) }};
-
-            buttonArray[0].ClickHandler = BackgroundFill1;
-            buttonArray[1].ClickHandler = BackgroundFill2;
-            buttonArray[2].ClickHandler = BackgroundFill3;
-
+            Button[] buttons = 
+            {
+                new Button
+                    {
+                        Title = "brokenBar", 
+                        Position = new Point(5, 5), 
+                        Size = new Size(15, 5),
+                        ClickHandler = context => context.BackgroundColor = GraphicsContext.brokenBar
+                    },
+                new Button
+                    {
+                        Title = "upDownArrow",
+                        Position = new Point(32, 5), 
+                        Size = new Size(15, 5),
+                        ClickHandler = context => context.BackgroundColor = GraphicsContext.upDownArrow
+                    },
+                new Button
+                    {
+                        Title = "black", 
+                        Position = new Point(59, 5), 
+                        Size = new Size(15, 5),
+                        ClickHandler = context => context.BackgroundColor = GraphicsContext.black
+                    }
+            };
+            
             graphicsContext.BackgroundColor = GraphicsContext.white;
             while (true)
             {
                 graphicsContext.Clear();
                 
-                for (int i = 0; i < buttonArray.Length; i++)
+                for (int i = 0; i < buttons.Length; i++)
                 {
-                    buttonArray[i].Draw(graphicsContext);
+                    buttons[i].Draw(graphicsContext);
                 }
 
                 graphicsContext.DrawRectangle(cursor, GraphicsContext.darkGrey);
@@ -59,10 +74,10 @@ namespace GraphicsLib
                         y++;
                         break;
                     case ConsoleKey.Spacebar:
-                        for (int i = 0; i < buttonArray.Length; i++)
+                        for (int i = 0; i < buttons.Length; i++)
                         {
-                            if (buttonArray[i].IsUnderCursor(cursor.LeftTopPoint))
-                                buttonArray[i].ClickHandler(graphicsContext);
+                            if (buttons[i].IsUnderCursor(cursor.LeftTopPoint))
+                                buttons[i].ClickHandler(graphicsContext);
                         }
                         break;
                     case ConsoleKey.Escape:
@@ -71,20 +86,5 @@ namespace GraphicsLib
                 cursor.LeftTopPoint = new Point(x, y);
             }
         }
-
-        private static void BackgroundFill1(GraphicsContext graphicsContext)
-        {
-            graphicsContext.BackgroundColor = GraphicsContext.brokenBar;
-        }
-
-        private static void BackgroundFill2(GraphicsContext graphicsContext)
-        {
-            graphicsContext.BackgroundColor = GraphicsContext.upDownArrow;
-        }
-
-        private static void BackgroundFill3(GraphicsContext graphicsContext)
-        {
-            graphicsContext.BackgroundColor = GraphicsContext.black;
-        } 
     }
 }
