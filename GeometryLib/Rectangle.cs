@@ -30,5 +30,12 @@ namespace GeometryLib
         {
             return Size.GetWidth() * Size.GetHeight();
         }
+
+        public static Point GetCenterPoint(Rectangle rectangle)
+        {
+            int x = rectangle.Size.GetWidth() / 2 + rectangle.LeftTopPoint.X;
+            int y = rectangle.Size.GetHeight() / 2 + rectangle.LeftTopPoint.Y;
+            return  new Point(x, y);
+        }
     }
 }

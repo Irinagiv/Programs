@@ -1,125 +1,143 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using GeometryLib;
 
 namespace GraphicsLib
 {
     public class GuiApplication
     {
-        private GraphicsContext _graphicsContext;
+        private readonly GraphicsContext _graphicsContext;
+        private readonly StatusBar _statusBar;
+        private readonly Cursor _cursor;
         protected Button[] Buttons;
-        private int _statusBarHeight;
-        private Point _cursorStartPosition;
-        private Point _cursorPosition;
-        private Rectangle _cursor;
-        private Size _cursorSize;
         private bool _needToClose;
-        private char _cursorBrush;
-        private string _statusMessage;
 
         public GuiApplication(int width, int height)
         {
-            _cursorPosition = new Point(0, 0);
-            _cursorSize = new Size(1, 1);
-            _statusBarHeight = 2;
-            _graphicsContext = new GraphicsContext(width, height - _statusBarHeight);
+            _cursor = new Cursor();
+            _statusBar = new StatusBar(width - 1);
+            const int statusBarHeight = 1;
+            _graphicsContext = new GraphicsContext(width, height - statusBarHeight);
             Buttons = new Button[0];
-            _statusMessage = "Нажмите клавиши со стрелками, чтобы переместить курсор";
-
-            SetCursorStartPosition();
-            _cursor = new Rectangle(_cursorPosition, _cursorSize);
         }
 
-        private void SetCursorStartPosition()
+        private void SetCursorStartPositionCentered()
         {
-            var x = _graphicsContext.CanvasSize.GetWidth()/2;
-            var y = _graphicsContext.CanvasSize.GetHeight()/2;
-            _cursorStartPosition = new Point(x, y);
+            var centerOfScreen = Rectangle.GetCenterPoint(new Rectangle(new Point(0, 0), _graphicsContext.CanvasSize));
+            _cursor.Position = centerOfScreen;
         }
 
         public void Run()
         {
             InitializeComponents();
             _needToClose = false;
+
             while (!_needToClose)
             {
-                _graphicsContext.Clear();
+                OutputGraphics();
 
-                for (int i = 0; i < Buttons.Length; i++)
-                {
-                    Buttons[i].Draw(_graphicsContext);
-                }
+                var keyInfo = RecieveSignal();
 
-                DrawCursor(_graphicsContext);
+                ReactToSignal(keyInfo);
+            }
+            ShowOnExitMessage();
+        }
 
-                DrawStatus(_statusMessage);
-
-                _graphicsContext.ToScreen();
-
-                var keyInfo = Console.ReadKey(false);
-                switch (keyInfo.Key)
-                {
-                    case ConsoleKey.LeftArrow:
-                        _cursorPosition.X--;
-                        break;
-                    case ConsoleKey.RightArrow:
-                        _cursorPosition.X++;
-                        break;
-                    case ConsoleKey.UpArrow:
-                        _cursorPosition.Y--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        _cursorPosition.Y++;
-                        break;
-                    case ConsoleKey.Escape:
-                        Exit();
-                        break;
-                    default:
-                        ProcessKey(keyInfo);
-                        break;
-                }
+        private void ReactToSignal(ConsoleKeyInfo keyInfo)
+        {
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                case ConsoleKey.RightArrow:
+                case ConsoleKey.UpArrow:
+                case ConsoleKey.DownArrow:
+                    MoveCursor(keyInfo);
+                    break;
+                case ConsoleKey.Escape:
+                    Exit();
+                    break;
+                default:
+                    ProcessKey(keyInfo);
+                    break;
             }
         }
 
-        private void DrawStatus(string statusMessage)
+        private static ConsoleKeyInfo RecieveSignal()
         {
-            Console.WriteLine("[{0}, {1}] {2}", _cursorPosition.X, _cursorPosition.Y, statusMessage);
+            var keyInfo = Console.ReadKey(false);
+            return keyInfo;
+        }
+
+        private void OutputGraphics()
+        {
+            _graphicsContext.Clear();
+
+            for (int i = 0; i < Buttons.Length; i++)
+            {
+                Buttons[i].Draw(_graphicsContext);
+            }
+
+            _cursor.Draw(_graphicsContext);
+
+            _graphicsContext.ToScreen();
+
+            _statusBar.Output();
+        }
+
+        private void ShowOnExitMessage()
+        {
+            _statusBar.Output();
+            Console.WriteLine();
+        }
+
+        private void MoveCursor(ConsoleKeyInfo keyInfo)
+        {
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    _cursor.MoveLeft();
+                    _statusBar.Message = "Left";
+                    break;
+                case ConsoleKey.RightArrow:
+                    _cursor.MoveRight();
+                    _statusBar.Message = "Right";
+                    break;
+                case ConsoleKey.UpArrow:
+                    _cursor.MoveUp();
+                    _statusBar.Message = "Up";
+                    break;
+                case ConsoleKey.DownArrow:
+                    _cursor.MoveDown();
+                    _statusBar.Message = "Down";
+                    break;
+            }
+            _statusBar.CursorPosition = _cursor.Position;
         }
 
         private void Exit()
         {
             _needToClose = true;
+            _statusBar.Message = "Exit";
         }
 
         private void ProcessKey(ConsoleKeyInfo key)
         {
             if (key.Key == ConsoleKey.Spacebar)
             {
-                _statusMessage = "CLICK";
+                _statusBar.Message = "Click";
                 for (int i = 0; i < Buttons.Length; i++)
                 {
-                    if (Buttons[i].IsUnderCursor(_cursorPosition))
+                    if (Buttons[i].IsUnderCursor(_cursor.Position))
                         Buttons[i].ClickHandler(_graphicsContext);
                 }
             }
         }
 
-        private void DrawCursor(GraphicsContext graphicsContext)
-        {
-            _cursor.LeftTopPoint = _cursorPosition;
-            _cursor.Size = _cursorSize;
-            graphicsContext.DrawRectangle(_cursor, _cursorBrush);
-        }
-
-        private void InitializeComponents()
+        protected virtual void InitializeComponents()
         {
             _graphicsContext.BackgroundColor = GraphicsContext.white;
-            _cursorBrush = GraphicsContext.darkGrey;
-            _cursorPosition = _cursorStartPosition;
+            _statusBar.Message = "Нажмите клавиши со стрелками, чтобы переместить курсор";
+            SetCursorStartPositionCentered();
 
-            
         }
     }
 }

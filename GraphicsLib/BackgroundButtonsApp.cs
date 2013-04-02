@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GeometryLib;
+﻿using GeometryLib;
 
 namespace GraphicsLib
 {
@@ -13,6 +9,12 @@ namespace GraphicsLib
         
         public BackgroundButtonsApp() : base(TerminalWidth, TerminalHeight)
         {
+            
+        }
+
+        protected override void InitializeComponents()
+        {
+            base.InitializeComponents();
             var buttons = new[]
             {
                 new Button
