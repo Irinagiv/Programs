@@ -14,7 +14,8 @@ namespace Exercise1
             bool test1Passed = HitSubPrograms.TestHitRectangle();
             bool hitDash = HitSubPrograms.TestHitHollowRectangle();
 
-            GraphicsSubPrograms.Test();
+            GraphicsSubPrograms.Test_EmptyApp();
+            GraphicsSubPrograms.Test_AppWithButtons();
         }
     }
 }
