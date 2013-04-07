@@ -6,7 +6,7 @@ using GeometryLib;
 
 namespace InputOutputLib
 {
-    static class InputOutputSubPrograms
+    public static class InputOutputSubPrograms
     {
         public static int ReadInt()
         {
@@ -22,7 +22,7 @@ namespace InputOutputLib
             return accumulatedNumber;
         }
 
-        static bool IsDigit(char ch)
+        public static bool IsDigit(char ch)
         {
             bool res = HitSubPrograms.Between('0', ch, '9');
             return res;

@@ -53,6 +53,11 @@ namespace GraphicsLib
             }
         }
 
+        public void DrawNumber(int x, int y, char number)
+        {
+            screenBuffer.Write(x, y, number);
+        }
+
         public void DrawRectangle(Rectangle rectangle, char brush)
         {
             for (int y = 0; y < screenBuffer.Size.GetHeight(); y++)
@@ -71,7 +76,5 @@ namespace GraphicsLib
             Rectangle rectangle = new Rectangle(pt, size);
             DrawRectangle(rectangle, brush);
         }
-
-
     }
 }

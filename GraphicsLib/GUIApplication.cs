@@ -1,5 +1,6 @@
 ﻿using System;
 using GeometryLib;
+using InputOutputLib;
 
 namespace GraphicsLib
 {
@@ -9,6 +10,7 @@ namespace GraphicsLib
         private readonly StatusBar _statusBar;
         private readonly Cursor _cursor;
         protected Button[] Buttons;
+        protected TextBox[] TextBoxs;
         private bool _needToClose;
 
         public GuiApplication(int width, int height)
@@ -18,6 +20,7 @@ namespace GraphicsLib
             const int statusBarHeight = 1;
             _graphicsContext = new GraphicsContext(width, height - statusBarHeight);
             Buttons = new Button[0];
+            TextBoxs = new TextBox[0];
         }
 
         private void SetCursorStartPositionCentered()
@@ -76,6 +79,11 @@ namespace GraphicsLib
                 Buttons[i].Draw(_graphicsContext);
             }
 
+            for (int j = 0; j < TextBoxs.Length; j++)
+            {
+                TextBoxs[j].Draw(_graphicsContext);
+            }
+
             _cursor.Draw(_graphicsContext);
 
             _graphicsContext.ToScreen();
@@ -127,7 +135,28 @@ namespace GraphicsLib
                 for (int i = 0; i < Buttons.Length; i++)
                 {
                     if (Buttons[i].IsUnderCursor(_cursor.Position))
-                        Buttons[i].ClickHandler(_graphicsContext);
+                    {
+                        TextBoxs[2].Text = Buttons[i].ClickHandler(Double.Parse(TextBoxs[0].Text),
+                                                                   Double.Parse(TextBoxs[1].Text))
+                                           .ToString();
+                    }
+                }
+            }
+            if (InputOutputSubPrograms.IsDigit(key.KeyChar))
+            {
+                _statusBar.Message = "Input number";
+                for (int i = 0; i < TextBoxs.Length; i++)
+                {
+                    if (TextBoxs[i].IsUnderCursor(_cursor.Position))
+                        TextBoxs[i].AddNumber(key.KeyChar);
+                }
+            }
+            if (key.Key == ConsoleKey.F1)
+            {
+                for (int i = 0; i < TextBoxs.Length; i++)
+                {
+                    if (TextBoxs[i].IsUnderCursor(_cursor.Position))
+                        TextBoxs[i].DeleteNumber();
                 }
             }
         }

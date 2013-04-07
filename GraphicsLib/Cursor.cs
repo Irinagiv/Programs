@@ -6,19 +6,19 @@ namespace GraphicsLib
     {
         private readonly Size _cursorSize;
 
+        public char Brush { get; set; }
+
+        public Point Position { get; set; }
+
         public Cursor()
         {
             Position = new Point(0, 0);
             _cursorSize = new Size(1, 1);
         }
 
-        public char Brush { get; set; }
-
-        public Point Position { get; set; }
-
         public void Draw(GraphicsContext graphicsContext)
         {
-            graphicsContext.DrawRectangle(Position, _cursorSize, GraphicsContext.grey);
+            graphicsContext.DrawRectangle(Position, _cursorSize, GraphicsContext.darkGrey);
         }
 
         public void MoveLeft()
